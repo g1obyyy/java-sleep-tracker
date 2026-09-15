@@ -43,14 +43,37 @@ public class SleepingSession implements Comparable<SleepingSession> {
         return new SleepingSession(start, end, quality, duration);
     }
 
-    public final LocalDateTime getLocalDateTimeStart() { return start; }
-    public final LocalDateTime getLocalDateTimeEnd() { return end; }
-    public final SleepQuality getQuality() { return quality; }
-    public final Duration getDuration() { return duration; }
-    public final LocalTime getLocalTimeStart() { return start.toLocalTime(); }
-    public final LocalTime getLocalTimeEnd() { return end.toLocalTime(); }
-    public final LocalDate getLocalDateStart() { return start.toLocalDate(); }
-    public final LocalDate getLocalDateEnd() { return end.toLocalDate(); }
+    public final LocalDateTime getLocalDateTimeStart() {
+        return start;
+    }
+
+    public final LocalDateTime getLocalDateTimeEnd() {
+        return end;
+    }
+
+    public final SleepQuality getQuality() {
+        return quality;
+    }
+
+    public final Duration getDuration() {
+        return duration;
+    }
+
+    public final LocalTime getLocalTimeStart() {
+        return start.toLocalTime();
+    }
+
+    public final LocalTime getLocalTimeEnd() {
+        return end.toLocalTime();
+    }
+
+    public final LocalDate getLocalDateStart() {
+        return start.toLocalDate();
+    }
+
+    public final LocalDate getLocalDateEnd() {
+        return end.toLocalDate();
+    }
 
     @Override
     public int compareTo(SleepingSession o) {
