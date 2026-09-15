@@ -15,5 +15,6 @@ public class AverageSessionMinutes implements Function<List<? extends SleepingSe
                 .mapToLong(session -> session.getDuration().toMinutes())
                 .average()
                 .orElseThrow(() -> new IllegalStateException("There is no sessions yet."));
-        return SleepAnalysisResult.of("Average sleeping session time (minutes)", average);    }
+        return SleepAnalysisResult.of("Average sleeping session time (minutes)", average);
+    }
 }
