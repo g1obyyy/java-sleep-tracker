@@ -11,6 +11,14 @@ public class SleepingSession implements Comparable<SleepingSession> {
     private static final String DELIMITER = ";";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
+    private static final LocalTime NIGHT_START = LocalTime.MIDNIGHT;
+    private static final LocalTime NIGHT_END = LocalTime.of(6, 0);
+
+    private static final LocalTime OWL_START = LocalTime.of(23, 0);
+    private static final LocalTime OWL_END = LocalTime.of(9, 0);
+    private static final LocalTime LARK_START = LocalTime.of(22, 0);
+    private static final LocalTime LARK_END = LocalTime.of(7, 0);
+
     private final LocalDateTime start;
     private final LocalDateTime end;
     private final SleepQuality quality;
@@ -47,5 +55,40 @@ public class SleepingSession implements Comparable<SleepingSession> {
     @Override
     public int compareTo(SleepingSession o) {
         return duration.compareTo(o.getDuration());
+    }
+
+    public boolean isNightSession() {
+        if (getLocalDateStart().isEqual(getLocalDateEnd())) {
+            return !getLocalTimeStart().isBefore(NIGHT_START) && getLocalTimeStart().isBefore(NIGHT_END);
+        }
+        return true;
+    }
+
+    public SleepType getNightSleepType() {
+        if (isOwl()) {
+            return SleepType.OWL;
+        }
+        if (isLark()) {
+            return SleepType.LARK;
+        }
+        return SleepType.PIGEON;
+    }
+
+    private boolean isOwl() {
+        final LocalTime sleepStart = getLocalTimeStart();
+        final LocalTime sleepEnd = getLocalTimeEnd();
+
+        boolean fallsAsleep = sleepStart.isAfter(OWL_START) || sleepStart.isBefore(OWL_END);
+        boolean wakesUp = sleepEnd.isAfter(OWL_END);
+        return fallsAsleep && wakesUp;
+    }
+
+    private boolean isLark() {
+        final LocalTime sleepStart = getLocalTimeStart();
+        final LocalTime sleepEnd = getLocalTimeEnd();
+
+        boolean fallsAsleep = sleepStart.isBefore(LARK_START) && sleepStart.isAfter(LARK_END);
+        boolean wakesUp = sleepEnd.isBefore(LARK_END);
+        return fallsAsleep && wakesUp;
     }
 }
