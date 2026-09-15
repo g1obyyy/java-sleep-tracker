@@ -1,7 +1,9 @@
 package ru.yandex.practicum.sleeptracker;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
@@ -33,10 +35,14 @@ public class SleepingSession implements Comparable<SleepingSession> {
         return new SleepingSession(start, end, quality, duration);
     }
 
-    public final LocalDateTime getStartTime() { return start; }
-    public final LocalDateTime getEndTime() { return end; }
+    public final LocalDateTime getLocalDateTimeStart() { return start; }
+    public final LocalDateTime getLocalDateTimeEnd() { return end; }
     public final SleepQuality getQuality() { return quality; }
     public final Duration getDuration() { return duration; }
+    public final LocalTime getLocalTimeStart() { return start.toLocalTime(); }
+    public final LocalTime getLocalTimeEnd() { return end.toLocalTime(); }
+    public final LocalDate getLocalDateStart() { return start.toLocalDate(); }
+    public final LocalDate getLocalDateEnd() { return end.toLocalDate(); }
 
     @Override
     public int compareTo(SleepingSession o) {
