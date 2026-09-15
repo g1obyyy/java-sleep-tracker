@@ -21,4 +21,12 @@ public class SleepAnalysisResult<T> {
     public String toString() {
         return output + ": " + result;
     }
+
+    public final T getResult() {
+        return result;
+    }
+
+    public final String getOutput() {
+        return output;
+    }
 }
