@@ -3,7 +3,6 @@ package ru.yandex.practicum.sleeptracker.sleepfunctions;
 import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;

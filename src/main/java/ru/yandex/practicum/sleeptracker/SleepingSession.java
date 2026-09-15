@@ -6,7 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class SleepingSession implements Comparable<SleepingSession> {
-    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
+    private static final String DELIMITER = ";";
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
     private final LocalDateTime start;
     private final LocalDateTime end;
@@ -21,8 +22,8 @@ public class SleepingSession implements Comparable<SleepingSession> {
     }
 
     public static SleepingSession of(String line) {
-        Objects.requireNonNull(line);
-        String[] tokens = line.split(";");
+        Objects.requireNonNull(line, "Sleeping session's info cannot be null");
+        String[] tokens = line.split("DELIMITER");
 
         LocalDateTime start = LocalDateTime.parse(tokens[0], formatter);
         LocalDateTime end = LocalDateTime.parse(tokens[1], formatter);
