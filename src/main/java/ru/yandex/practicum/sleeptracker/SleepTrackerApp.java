@@ -37,7 +37,7 @@ public class SleepTrackerApp {
         }
     }
 
-    private List<SleepingSession> loadSessions(final String filepath) throws LoadSessionsException {
+    public List<SleepingSession> loadSessions(final String filepath) throws LoadSessionsException {
         Objects.requireNonNull(filepath, "Filepath cannot be null");
         final List<SleepingSession> sessions = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath, StandardCharsets.UTF_8))) {
@@ -51,7 +51,7 @@ public class SleepTrackerApp {
         return sessions;
     }
 
-    private void printStatistics(final List<SleepingSession> sessions) throws GetStatisticsException {
+    public void printStatistics(final List<SleepingSession> sessions) throws GetStatisticsException {
         try {
             functions.stream()
                     .map(function -> function.apply(sessions))
@@ -61,7 +61,7 @@ public class SleepTrackerApp {
         }
     }
 
-    private void run(final String filename) throws LoadSessionsException, GetStatisticsException {
+    public void run(final String filename) throws LoadSessionsException, GetStatisticsException {
         List<SleepingSession> sessions = loadSessions(filename);
         if (sessions.isEmpty()) {
             System.out.println("Log file is empty, there is no any Sleeping sessions.");
