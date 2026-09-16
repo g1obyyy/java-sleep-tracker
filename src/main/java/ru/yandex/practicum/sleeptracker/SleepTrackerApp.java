@@ -7,7 +7,6 @@ import ru.yandex.practicum.sleeptracker.sleepfunctions.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
