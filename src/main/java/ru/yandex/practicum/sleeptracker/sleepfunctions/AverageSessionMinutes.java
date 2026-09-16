@@ -11,10 +11,10 @@ public class AverageSessionMinutes implements Function<List<? extends SleepingSe
     @Override
     public SleepAnalysisResult<Long> apply(List<? extends SleepingSession> sessions) {
         Objects.requireNonNull(sessions, "Sessions list must be initialized");
-        long average = (long) sessions.stream()
+        long average =  Math.round(sessions.stream()
                 .mapToLong(session -> session.getDuration().toMinutes())
                 .average()
-                .orElseThrow(() -> new IllegalStateException("There is no sessions yet."));
+                .orElseThrow(() -> new IllegalStateException("There is no sessions yet.")));
         return SleepAnalysisResult.of("Average sleeping session time (minutes)", average);
     }
 }

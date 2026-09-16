@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class SleepTrackerApp {
     private final List<Function<List<? extends SleepingSession>, ? extends SleepAnalysisResult<?>>> functions = List.of(
@@ -39,16 +40,13 @@ public class SleepTrackerApp {
 
     public List<SleepingSession> loadSessions(final String filepath) throws LoadSessionsException {
         Objects.requireNonNull(filepath, "Filepath cannot be null");
-        final List<SleepingSession> sessions = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sessions.add(SleepingSession.of(line));
-            }
+            return reader.lines()
+                    .map(SleepingSession::of)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             throw new LoadSessionsException("Reading sessions failure", e);
         }
-        return sessions;
     }
 
     public void printStatistics(final List<SleepingSession> sessions) throws GetStatisticsException {
