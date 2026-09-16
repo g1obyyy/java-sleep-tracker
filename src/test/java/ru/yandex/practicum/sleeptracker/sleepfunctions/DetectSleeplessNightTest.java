@@ -39,11 +39,22 @@ public class DetectSleeplessNightTest {
     }
 
     @Test
-    public void shouldCountMidnightSession() {
+    public void shouldShiftIntervalStartWhenFirstSessionIsAfterMidnight() {
         List<SleepingSession> sessions = List.of(
-                SleepingSession.of("02.10.25 00:00;02.10.25 07:30;GOOD")
+                SleepingSession.of("05.10.25 00:10;05.10.25 06:20;GOOD"),
+                SleepingSession.of("06.10.25 23:00;07.10.25 07:00;GOOD")
         );
-        Assertions.assertEquals(0, function.apply(sessions).getResult());
+        Assertions.assertEquals(1, function.apply(sessions).getResult());
+    }
+
+    @Test
+    public void shouldCountTwoSessionsInOneNightAsOne() {
+        List<SleepingSession> sessions = List.of(
+                SleepingSession.of("01.10.25 22:30;01.10.25 23:45;BAD"),
+                SleepingSession.of("02.10.25 01:00;02.10.25 06:00;NORMAL"),
+                SleepingSession.of("03.10.25 23:00;04.10.25 07:00;GOOD")
+        );
+        Assertions.assertEquals(1, function.apply(sessions).getResult());
     }
 
     @Test

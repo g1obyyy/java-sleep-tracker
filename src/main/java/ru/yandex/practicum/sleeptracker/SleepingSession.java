@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class SleepingSession implements Comparable<SleepingSession> {
+public class SleepingSession {
     private static final String DELIMITER = ";";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
@@ -74,7 +74,6 @@ public class SleepingSession implements Comparable<SleepingSession> {
     public final LocalDate getLocalDateEnd() {
         return end.toLocalDate();
     }
-
 
     public boolean isNightSession() {
         if (getLocalDateStart().isEqual(getLocalDateEnd())) {

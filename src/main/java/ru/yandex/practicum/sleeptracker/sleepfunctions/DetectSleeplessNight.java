@@ -4,6 +4,7 @@ import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
@@ -15,21 +16,28 @@ public class DetectSleeplessNight implements Function<List<? extends SleepingSes
         Objects.requireNonNull(sessions, "Sessions list must be initialized");
 
         LocalDate firstDate = sessions.stream()
-                .map(SleepingSession::getLocalDateStart)
+                .map(this::getNightDate)
                 .min(LocalDate::compareTo)
                 .orElseThrow(() -> new IllegalStateException("There is no sessions yet."));
 
         LocalDate lastDate = sessions.stream()
-                .map(SleepingSession::getLocalDateEnd)
+                .map(this::getNightDate)
                 .max(LocalDate::compareTo)
                 .orElseThrow(() -> new IllegalStateException("There is no sessions yet."));
 
-        long totalNights = ChronoUnit.DAYS.between(firstDate, lastDate);
+        long totalNights = ChronoUnit.DAYS.between(firstDate, lastDate) + 1;
         long sleepNights = sessions.stream()
                 .filter(SleepingSession::isNightSession)
-                .map(SleepingSession::getLocalDateStart)
+                .map(this::getNightDate)
                 .distinct()
                 .count();
-        return SleepAnalysisResult.of("Sleepless nights count", Math.max(0, totalNights - sleepNights));
+        return SleepAnalysisResult.of("Sleepless nights count", totalNights - sleepNights);
+    }
+
+    private LocalDate getNightDate(final SleepingSession session) {
+        if (session.getLocalTimeStart().isBefore(LocalTime.NOON)) {
+            return session.getLocalDateStart().minusDays(1);
+        }
+        return session.getLocalDateStart();
     }
 }
