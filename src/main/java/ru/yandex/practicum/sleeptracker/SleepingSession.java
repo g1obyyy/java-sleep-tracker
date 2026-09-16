@@ -75,10 +75,6 @@ public class SleepingSession implements Comparable<SleepingSession> {
         return end.toLocalDate();
     }
 
-    @Override
-    public int compareTo(SleepingSession o) {
-        return duration.compareTo(o.getDuration());
-    }
 
     public boolean isNightSession() {
         if (getLocalDateStart().isEqual(getLocalDateEnd())) {
