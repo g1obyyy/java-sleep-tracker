@@ -60,7 +60,7 @@ public class DetectSleeplessNightTest {
     @Test
     public void shouldCountCorrectlyWhenDifferentMonths() {
         List<SleepingSession> sessions = List.of(
-                SleepingSession.of("30.01.25 00:10;31.01.25 07:30;GOOD"),
+                SleepingSession.of("31.01.25 00:10;31.01.25 07:30;GOOD"),
                 SleepingSession.of("31.01.25 23:10;01.02.25 05:30;BAD"),
                 SleepingSession.of("02.02.25 11:10;02.02.25 14:30;NORMAL"),
                 SleepingSession.of("03.02.25 00:10;03.02.25 07:30;GOOD")
