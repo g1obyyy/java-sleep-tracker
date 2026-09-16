@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.sleeptracker.exceptions.GetStatisticsException;
 import ru.yandex.practicum.sleeptracker.exceptions.LoadSessionsException;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
 public class SleepTrackerAppTest {
     private SleepTrackerApp app;
 
@@ -33,5 +37,25 @@ public class SleepTrackerAppTest {
     public void shouldReturnCorrectSessionsCount() throws LoadSessionsException {
         int count = app.loadSessions("src/main/resources/sleep_log.txt").size();
         Assertions.assertEquals(13, count);
+    }
+
+    @Test
+    public void shouldReturnEmptyListWhenFileIsEmpty() throws Exception {
+        Path tempEmptyFile = Files.createTempFile("empty_log", ".txt");
+
+        List<?> sessions = app.loadSessions(tempEmptyFile.toString());
+        Assertions.assertTrue(sessions.isEmpty());
+
+        Files.delete(tempEmptyFile);
+    }
+
+    @Test
+    public void shouldThrowLoadSessionsExceptionWhenDataIsBroken() throws Exception {
+        Path tempBrokenFile = Files.createTempFile("broken_log", ".txt");
+        Files.writeString(tempBrokenFile, "01.10.25 23:15;dsadftgythyujujhgtfrd;GOOD");
+
+        Assertions.assertThrows(LoadSessionsException.class, () -> app.loadSessions(tempBrokenFile.toString()));
+
+        Files.delete(tempBrokenFile);
     }
 }
